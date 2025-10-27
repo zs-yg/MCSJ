@@ -25,21 +25,32 @@ namespace MCSJ.Tools
                     throw new FileNotFoundException($"服务器列表文件不存在: {filePath}");
                 }
 
-                var content = File.ReadAllText(filePath);
-                var entries = content.Split(new[] {' ', '\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
-                
-                foreach (var entry in entries)
+                var lines = File.ReadAllLines(filePath);
+
+                foreach (var rawLine in lines)
                 {
-                    var colonIndex = entry.IndexOf(':');
-                    if (colonIndex > 0 && colonIndex < entry.Length - 1)
+                    var line = rawLine.Trim();
+                    // 跳过空行和注释
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                        continue;
+
+                    var colonIndex = line.IndexOf(':');
+                    if (colonIndex > 0 && colonIndex < line.Length - 1)
                     {
-                        var version = entry.Substring(0, colonIndex);
-                        var url = entry.Substring(colonIndex + 1);
+                        var version = line.Substring(0, colonIndex).Trim();
+                        var url = line.Substring(colonIndex + 1).Trim();
+
+                        if (string.IsNullOrEmpty(version) || string.IsNullOrEmpty(url))
+                        {
+                            Console.WriteLine($"忽略无效条目: {rawLine} (版本或URL为空)");
+                            continue;
+                        }
+
                         _versions[version] = url;
                     }
                     else
                     {
-                        Console.WriteLine($"忽略无效条目: {entry} (缺少冒号分隔或格式不正确)");
+                        Console.WriteLine($"忽略无效条目: {rawLine} (缺少冒号分隔或格式不正确)");
                     }
                 }
                 
@@ -54,7 +65,7 @@ namespace MCSJ.Tools
             {
                 Console.WriteLine($"加载版本列表失败: {ex.Message}");
                 Console.WriteLine($"当前工作目录: {Directory.GetCurrentDirectory()}");
-                Console.WriteLine("请确保serverlist.txt格式为: 版本名:下载URL (每行一个或空格分隔)");
+                Console.WriteLine("请确保serverlist.txt每行格式为: 版本名:下载URL (版本名可以包含空格)，支持以#开头的注释");
             }
         }
 
