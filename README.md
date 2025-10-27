@@ -38,8 +38,11 @@ MCSJ 是一个开源的 Minecraft 服务器管理工具，旨在为用户提供�
 MCSJ 项目由 [zs-yg](https://github.com/zs-yg) 开发，欢迎提交 issue 和 PR。
 
 [discord](https://discord.gg/4mbqUzfg)
+
 qq群:1043867176
+
 [b站号]:(https://space.bilibili.com/1698250734)
+
 
 ## 开源协议
 
