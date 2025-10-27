@@ -16,6 +16,8 @@ MCSJ 是一个开源的 Minecraft 服务器管理工具，旨在为用户提供�
 
 网盘链接: https://www.123865.com/s/msALTd-L610d
 
+githu releases: https://github.com/zs-yg/MCSJ/releases
+
 ## 开发环境
 
 - Windows 10
