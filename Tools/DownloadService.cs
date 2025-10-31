@@ -25,10 +25,34 @@ namespace MCSJ.Tools
                 return;
             }
 
+            // 根目录 profiles 文件夹
+            var profilesRoot = Path.Combine(Directory.GetCurrentDirectory(), "profiles");
+            if (!Directory.Exists(profilesRoot))
+                Directory.CreateDirectory(profilesRoot);
+
+            string targetFolder = null;
+            string profilePath = null;
+            while (true)
+            {
+                Console.Write($"请输入存放文件夹名称（直接回车默认用版本名 '{version}'）：");
+                var input = Console.ReadLine();
+                targetFolder = string.IsNullOrWhiteSpace(input) ? version : input;
+                profilePath = Path.Combine(profilesRoot, targetFolder);
+                if (!Directory.Exists(profilePath))
+                    break;
+                Console.WriteLine($"文件夹 '{targetFolder}' 已存在，请重新输入（直接回车则取消下载）：");
+            }
+            if (Directory.Exists(profilePath))
+            {
+                Console.WriteLine("下载已取消。");
+                return;
+            }
+            Directory.CreateDirectory(profilePath);
+            string jarPath = Path.Combine(profilePath, "server.jar");
+
             try
             {
-                Console.WriteLine($"开始下载 {version}...");
-                
+                Console.WriteLine($"开始下载 {version} 到 {profilePath} ...");
                 var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
                 response.EnsureSuccessStatusCode();
 
@@ -38,7 +62,7 @@ namespace MCSJ.Tools
                 var isMoreToRead = true;
 
                 using (var stream = await response.Content.ReadAsStreamAsync())
-                using (var fileStream = new FileStream($"{version}.jar", FileMode.Create, FileAccess.Write))
+                using (var fileStream = new FileStream(jarPath, FileMode.Create, FileAccess.Write))
                 {
                     while (isMoreToRead)
                     {
@@ -50,7 +74,6 @@ namespace MCSJ.Tools
                         else
                         {
                             await fileStream.WriteAsync(buffer, 0, read);
-
                             downloadedBytes += read;
                             if (totalBytes > 0)
                             {
@@ -60,8 +83,7 @@ namespace MCSJ.Tools
                         }
                     }
                 }
-
-                Console.WriteLine($"\n{version} 下载完成!");
+                Console.WriteLine($"\n{version} 下载完成! 文件已保存到 {jarPath}");
             }
             catch (Exception ex)
             {
