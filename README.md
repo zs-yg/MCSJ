@@ -55,4 +55,5 @@ MIT协议
 
 不用捐款，使用这个链接注册服务器就行了awa
 性能不错，可以免费白嫖
-[rainyun]:(https://www.rainyun.com/Nzk2NDEy_)
+
+[服务器]:(https://www.rainyun.com/Nzk2NDEy_)
