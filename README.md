@@ -48,6 +48,11 @@ qq群:1043867176
 
 ## 开源协议
 
+MIT协议
 本项目已在 GitHub 开源，欢迎贡献代码与建议。
 
+# 恰饭awa
 
+不用捐款，使用这个链接注册服务器就行了awa
+性能不错，可以免费白嫖
+[rainyun]:(https://www.rainyun.com/Nzk2NDEy_)
