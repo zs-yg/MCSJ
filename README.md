@@ -43,7 +43,7 @@ MCSJ 项目由 [zs-yg](https://github.com/zs-yg) 开发，欢迎提交 issue 和
 
 qq群:1043867176
 
-[b站号]:(https://space.bilibili.com/1698250734)
+b站号:https://space.bilibili.com/1698250734
 
 
 ## 开源协议
@@ -56,4 +56,4 @@ MIT协议
 不用捐款，使用这个链接注册服务器就行了awa
 性能不错，可以免费白嫖
 
-[服务器]:(https://www.rainyun.com/Nzk2NDEy_)
+服务器:https://www.rainyun.com/Nzk2NDEy_
