@@ -1,0 +1,4 @@
+jre8:https://pan.tenire.com/down.php/2dd2a856cdb549dce5b557026e20b36a.zip
+jre11:https://pan.tenire.com/down.php/3ec613e667f35e364d921aeb0315272a.zip
+jre17:https://pan.tenire.com/down.php/f28009799fca1c62f4c37a5ab4759db3.zip
+jre21:https://pan.tenire.com/down.php/253e308ecfce3be809f2e85d6513791d.zip
