@@ -16,10 +16,16 @@ namespace MCSJ.Tools
             _httpClient = new HttpClient();
         }
 
-        public async Task DownloadVersion(string version)
+        public async Task DownloadVersion(string? version)
         {
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                Console.WriteLine("版本名称不能为空");
+                return;
+            }
+
             var url = _versionManager.GetDownloadUrl(version);
-            if (url == null)
+            if (string.IsNullOrEmpty(url))
             {
                 Console.WriteLine($"版本 {version} 不存在");
                 return;
@@ -30,8 +36,8 @@ namespace MCSJ.Tools
             if (!Directory.Exists(profilesRoot))
                 Directory.CreateDirectory(profilesRoot);
 
-            string targetFolder = null;
-            string profilePath = null;
+            string? targetFolder = null;
+            string? profilePath = null;
             while (true)
             {
                 Console.Write($"请输入存放文件夹名称（直接回车默认用版本名 '{version}'）：");

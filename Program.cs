@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using MCSJ.Tools;
 using MCSJ.Tools.LogSystem;
+using MCSJ.Tools.JreDownload;
 
 namespace MCSJ
 {
@@ -15,6 +16,10 @@ namespace MCSJ
             LogMain.Debug($"日志文件: {LogCreator.GetLogFilePath()}");
             
             LogMain.Info("MC服务器下载工具启动");
+            var httpClient = new HttpClient {
+                Timeout = TimeSpan.FromMinutes(5),
+                DefaultRequestHeaders = { { "User-Agent", "MCSJ-JRE-Downloader" } }
+            };
             var versionManager = new VersionManager();
             var downloadService = new DownloadService(versionManager);
             LogMain.Debug("服务初始化完成");
@@ -24,7 +29,8 @@ namespace MCSJ
                 Console.WriteLine("MC服务器下载工具");
                 Console.WriteLine("1. 显示所有版本");
                 Console.WriteLine("2. 下载指定版本");
-                Console.WriteLine("3. 退出");
+                Console.WriteLine("3. 下载JRE");
+                Console.WriteLine("4. 退出");
                 Console.Write("请选择操作: ");
                 
                 var input = Console.ReadLine();
@@ -44,6 +50,19 @@ namespace MCSJ
                         LogMain.Info($"版本下载完成: {version}");
                         break;
                     case "3":
+                        Console.Write("请输入要下载的JRE版本(如jre8,jre11等): ");
+                        var jreVersion = Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(jreVersion))
+                        {
+                            Console.WriteLine("JRE版本不能为空");
+                            continue;
+                        }
+                        LogMain.Info($"开始下载JRE: {jreVersion}");
+                        var jreDownloadService = new JreDownloadService(httpClient);
+                        await jreDownloadService.DownloadAndSetupJre(jreVersion);
+                        LogMain.Info($"JRE下载完成: {jreVersion}");
+                        break;
+                    case "4":
                         LogMain.Info("程序正常退出");
                         return;
                     default:

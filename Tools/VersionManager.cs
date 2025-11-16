@@ -71,6 +71,13 @@ namespace MCSJ.Tools
 
         public void DisplayAllVersions()
         {
+            var filePath = Path.Combine("resources", "serverlist.txt");
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine("版本列表文件不存在");
+                return;
+            }
+
             Console.WriteLine("可用版本列表:");
             foreach (var version in _versions.Keys)
             {
@@ -78,7 +85,7 @@ namespace MCSJ.Tools
             }
         }
 
-        public string GetDownloadUrl(string version)
+        public string? GetDownloadUrl(string version)
         {
             return _versions.TryGetValue(version, out var url) ? url : null;
         }
