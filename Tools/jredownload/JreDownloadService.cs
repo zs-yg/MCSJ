@@ -21,6 +21,13 @@ namespace MCSJ.Tools.JreDownload
 
         public async Task DownloadAndSetupJre(string version)
         {
+            // 0. 检查是否已存在该版本
+            if (CheckJreExists(version))
+            {
+                Console.WriteLine($"JRE {version} 已存在，无需重复下载");
+                return;
+            }
+
             // 1. 读取jrelist.txt获取下载链接
             var downloadUrl = GetDownloadUrl(version);
             if (string.IsNullOrEmpty(downloadUrl))
@@ -163,6 +170,23 @@ namespace MCSJ.Tools.JreDownload
                 return null;
 
             return Directory.GetFiles(folder, exeName, SearchOption.AllDirectories).FirstOrDefault();
+        }
+
+        private bool CheckJreExists(string version)
+        {
+            var tomlPath = Path.Combine(SetupFolder, "jre.toml");
+            if (!File.Exists(tomlPath))
+                return false;
+
+            try
+            {
+                var content = File.ReadAllText(tomlPath);
+                return content.Contains($"[jre.{version}]");
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void CreateJreToml(string version, string javaExePath, string javawExePath)

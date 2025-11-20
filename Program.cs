@@ -50,7 +50,7 @@ namespace MCSJ
                         LogMain.Info($"版本下载完成: {version}");
                         break;
                     case "3":
-                        Console.Write("请输入要下载的JRE版本(如jre8,jre11等): ");
+                        Console.Write("请输入要下载的JRE版本(jre8,jre11,jre17/21/25): ");
                         var jreVersion = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(jreVersion))
                         {
