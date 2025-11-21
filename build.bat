@@ -11,3 +11,5 @@ rmdir /s /q MCSJ-x86\publish
 7z a -tzip MCSJ-x86.zip MCSJ-x86
 7z a -ttar MCSJ-x64.tar MCSJ-x64
 7z a -ttar MCSJ-x86.tar MCSJ-x86
+rmdir /s /q MCSJ-x64
+rmdir /s /q MCSJ-x86
