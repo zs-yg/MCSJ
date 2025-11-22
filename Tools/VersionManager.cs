@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MCSJ.Tools.LogSystem;
 
 namespace MCSJ.Tools
 {
@@ -19,6 +20,7 @@ namespace MCSJ.Tools
             {
                 var filePath = Path.Combine("resources", "serverlist.txt");
                 Console.WriteLine($"尝试从路径加载版本列表: {Path.GetFullPath(filePath)}");
+                LogMain.Info($"尝试从路径加载版本列表: {Path.GetFullPath(filePath)}");
                 
                 if (!File.Exists(filePath))
                 {
@@ -42,7 +44,8 @@ namespace MCSJ.Tools
 
                         if (string.IsNullOrEmpty(version) || string.IsNullOrEmpty(url))
                         {
-                            Console.WriteLine($"忽略无效条目: {rawLine} (版本或URL为空)");
+                    Console.WriteLine($"忽略无效条目: {rawLine} (版本或URL为空)");
+                    LogMain.Warn($"忽略无效条目: {rawLine} (版本或URL为空)");
                             continue;
                         }
 
@@ -51,6 +54,7 @@ namespace MCSJ.Tools
                     else
                     {
                         Console.WriteLine($"忽略无效条目: {rawLine} (缺少冒号分隔或格式不正确)");
+                        LogMain.Warn($"忽略无效条目: {rawLine} (缺少冒号分隔或格式不正确)");
                     }
                 }
                 
@@ -60,12 +64,15 @@ namespace MCSJ.Tools
                 }
                 
                 Console.WriteLine($"成功加载 {_versions.Count} 个版本");
+                LogMain.Info($"成功加载 {_versions.Count} 个版本");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"加载版本列表失败: {ex.Message}");
                 Console.WriteLine($"当前工作目录: {Directory.GetCurrentDirectory()}");
                 Console.WriteLine("请确保serverlist.txt每行格式为: 版本名:下载URL (版本名可以包含空格)，支持以#开头的注释");
+                LogMain.Error($"加载版本列表失败: {ex.Message}");
+                LogMain.Error($"当前工作目录: {Directory.GetCurrentDirectory()}");
             }
         }
 
@@ -75,10 +82,12 @@ namespace MCSJ.Tools
             if (!File.Exists(filePath))
             {
                 Console.WriteLine("版本列表文件不存在");
+                LogMain.Error("版本列表文件不存在");
                 return;
             }
 
-            Console.WriteLine("可用版本列表:");
+                Console.WriteLine("可用版本列表:");
+                LogMain.Info("可用版本列表:");
             foreach (var version in _versions.Keys)
             {
                 Console.WriteLine(version);

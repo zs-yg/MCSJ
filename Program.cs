@@ -16,7 +16,7 @@ namespace MCSJ
             Console.WriteLine($"日志目录: {logDir}");
             LogMain.Debug($"日志文件: {LogCreator.GetLogFilePath()}");
             
-            LogMain.Info("MC服务器下载工具启动");
+            LogMain.Info("MC服务器启动工具启动");
             var httpClient = new HttpClient {
                 Timeout = TimeSpan.FromMinutes(5),
                 DefaultRequestHeaders = { { "User-Agent", "MCSJ-JRE-Downloader" } }
@@ -28,9 +28,9 @@ namespace MCSJ
             
             while (true)
             {
-                Console.WriteLine("MC服务器下载工具");
-                Console.WriteLine("1. 显示所有版本");
-                Console.WriteLine("2. 下载指定版本");
+                Console.WriteLine("MC服务器启动工具");
+                Console.WriteLine("1. 显示所有服务器版本");
+                Console.WriteLine("2. 下载指定服务器版本");
                 Console.WriteLine("3. 下载JRE");
                 Console.WriteLine("4. 查看已安装的JRE");
                 Console.WriteLine("5. 退出");

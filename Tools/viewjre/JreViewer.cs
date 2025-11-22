@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using MCSJ.Tools.LogSystem;
 
 namespace MCSJ.Tools.ViewJre
 {
@@ -16,6 +17,7 @@ namespace MCSJ.Tools.ViewJre
             if (!File.Exists(tomlPath))
             {
                 Console.WriteLine("没有安装任何JRE");
+                LogMain.Info("没有安装任何JRE");
                 return;
             }
 
@@ -29,11 +31,13 @@ namespace MCSJ.Tools.ViewJre
 
                 if (versions.Count == 0)
                 {
-                    Console.WriteLine("没有安装任何JRE");
-                    return;
+                Console.WriteLine("没有安装任何JRE");
+                LogMain.Info("没有安装任何JRE");
+                return;
                 }
 
                 Console.WriteLine("已安装的JRE版本:");
+                LogMain.Info("已安装的JRE版本:");
                 foreach (var version in versions)
                 {
                     Console.WriteLine(version); // 直接输出版本号，不带前缀
@@ -42,6 +46,7 @@ namespace MCSJ.Tools.ViewJre
             catch (Exception ex)
             {
                 Console.WriteLine($"读取JRE列表失败: {ex.Message}");
+                LogMain.Error($"读取JRE列表失败: {ex.Message}");
             }
         }
     }

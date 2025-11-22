@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO.Compression;
+using MCSJ.Tools.LogSystem;
 
 namespace MCSJ.Tools.JreDownload
 {
@@ -25,6 +26,7 @@ namespace MCSJ.Tools.JreDownload
             if (CheckJreExists(version))
             {
                 Console.WriteLine($"JRE {version} 已存在，无需重复下载");
+                LogMain.Info($"JRE {version} 已存在，无需重复下载");
                 return;
             }
 
@@ -33,6 +35,7 @@ namespace MCSJ.Tools.JreDownload
             if (string.IsNullOrEmpty(downloadUrl))
             {
                 Console.WriteLine($"找不到版本 {version} 的下载链接");
+                LogMain.Error($"找不到版本 {version} 的下载链接");
                 return;
             }
 
@@ -42,6 +45,7 @@ namespace MCSJ.Tools.JreDownload
             if (string.IsNullOrEmpty(tempZipPath))
             {
                 Console.WriteLine("下载失败");
+                LogMain.Error("下载失败");
                 return;
             }
 
@@ -50,6 +54,7 @@ namespace MCSJ.Tools.JreDownload
             if (!ExtractJre(tempZipPath, jreFolder))
             {
                 Console.WriteLine("解压失败");
+                LogMain.Error("解压失败");
                 return;
             }
 
@@ -60,6 +65,7 @@ namespace MCSJ.Tools.JreDownload
             if (javaExePath == null || javawExePath == null)
             {
                 Console.WriteLine("找不到java.exe或javaw.exe");
+                LogMain.Error("找不到java.exe或javaw.exe");
                 return;
             }
 
@@ -69,7 +75,8 @@ namespace MCSJ.Tools.JreDownload
             // 6. 清理临时文件
             File.Delete(tempZipPath);
 
-            Console.WriteLine($"JRE {version} 安装完成");
+                Console.WriteLine($"JRE {version} 安装完成");
+                LogMain.Info($"JRE {version} 安装完成");
         }
 
         private string? GetDownloadUrl(string version)
@@ -99,18 +106,22 @@ namespace MCSJ.Tools.JreDownload
                 if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
                     Console.WriteLine($"无效的下载URL: {url}");
+                    LogMain.Error($"无效的下载URL: {url}");
                     return null;
                 }
 
                 Console.WriteLine($"正在准备下载 {url}...");
+                LogMain.Info($"正在准备下载 {url}...");
                 var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
                 response.EnsureSuccessStatusCode();
 
                 var totalBytes = response.Content.Headers.ContentLength ?? 0;
                 Console.WriteLine($"文件总大小: {totalBytes} 字节");
+                LogMain.Info($"文件总大小: {totalBytes} 字节");
                 long bytesRead = 0;
                 var lastReportTime = DateTime.MinValue;
                 Console.WriteLine("开始下载...");
+                LogMain.Info("开始下载...");
 
                 using (var stream = await response.Content.ReadAsStreamAsync())
                 using (var fileStream = new FileStream(tempPath, FileMode.Create))
@@ -139,6 +150,7 @@ namespace MCSJ.Tools.JreDownload
             catch (Exception ex)
             {
                 Console.WriteLine($"下载失败: {ex.Message}");
+                LogMain.Error($"下载失败: {ex.Message}");
                 return null;
             }
         }
@@ -157,6 +169,7 @@ namespace MCSJ.Tools.JreDownload
             catch (Exception ex)
             {
                 Console.WriteLine($"解压失败: {ex.Message}");
+                LogMain.Error($"解压失败: {ex.Message}");
                 return false;
             }
         }

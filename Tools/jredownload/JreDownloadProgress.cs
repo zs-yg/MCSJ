@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using MCSJ.Tools.LogSystem;
 
 namespace MCSJ.Tools.JreDownload
 {
@@ -33,6 +34,7 @@ namespace MCSJ.Tools.JreDownload
                 if (percentage == 100)
                 {
                     Console.WriteLine();
+                    LogMain.Info("JRE下载完成");
                 }
             }
             finally

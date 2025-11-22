@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MCSJ.Tools.LogSystem;
 
 namespace MCSJ.Tools
 {
@@ -21,6 +22,7 @@ namespace MCSJ.Tools
             if (string.IsNullOrWhiteSpace(version))
             {
                 Console.WriteLine("版本名称不能为空");
+                LogMain.Error("版本名称不能为空");
                 return;
             }
 
@@ -28,6 +30,7 @@ namespace MCSJ.Tools
             if (string.IsNullOrEmpty(url))
             {
                 Console.WriteLine($"版本 {version} 不存在");
+                LogMain.Error($"版本 {version} 不存在");
                 return;
             }
 
@@ -47,10 +50,12 @@ namespace MCSJ.Tools
                 if (!Directory.Exists(profilePath))
                     break;
                 Console.WriteLine($"文件夹 '{targetFolder}' 已存在，请重新输入（直接回车则取消下载）：");
+                LogMain.Warn($"文件夹 '{targetFolder}' 已存在，请重新输入（直接回车则取消下载）：");
             }
             if (Directory.Exists(profilePath))
             {
                 Console.WriteLine("下载已取消。");
+                LogMain.Info("下载已取消。");
                 return;
             }
             Directory.CreateDirectory(profilePath);
@@ -59,6 +64,7 @@ namespace MCSJ.Tools
             try
             {
                 Console.WriteLine($"开始下载 {version} 到 {profilePath} ...");
+                LogMain.Info($"开始下载 {version} 到 {profilePath} ...");
                 var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
                 response.EnsureSuccessStatusCode();
 
@@ -90,10 +96,12 @@ namespace MCSJ.Tools
                     }
                 }
                 Console.WriteLine($"\n{version} 下载完成! 文件已保存到 {jarPath}");
+                LogMain.Info($"{version} 下载完成! 文件已保存到 {jarPath}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"下载失败: {ex.Message}");
+                LogMain.Error($"下载失败: {ex.Message}");
             }
         }
     }
