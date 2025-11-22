@@ -35,7 +35,13 @@ MCSJ 是一个开源的 Minecraft 服务器管理工具，旨在为用户提供�
 2. 双击运行 MCSJ.exe 启动程序。
 3. 或者命令行输入MCSJ.exe 启动程序。可以查看是否需要安装运行时
 
-## 关于作者
+## 官方镜像仓库
+
+[gitlab]:(https://gitlab.com/zs-yg/MCSJ)
+
+[gitee]:(https://gitee.com/chr_super/mcsj)
+
+## 关于
 
 MCSJ 项目由 [zs-yg](https://github.com/zs-yg) 开发，欢迎提交 issue 和 PR。
 
