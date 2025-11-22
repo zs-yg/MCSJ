@@ -37,9 +37,9 @@ MCSJ 是一个开源的 Minecraft 服务器管理工具，旨在为用户提供�
 
 ## 官方镜像仓库
 
-[gitlab]:(https://gitlab.com/zs-yg/MCSJ)
+[gitlab镜像仓库](https://gitlab.com/zs-yg/MCSJ)
 
-[gitee]:(https://gitee.com/chr_super/mcsj)
+[gitee镜像仓库](https://gitee.com/chr_super/mcsj)
 
 ## 关于
 
