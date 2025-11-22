@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MCSJ.Tools;
 using MCSJ.Tools.LogSystem;
 using MCSJ.Tools.JreDownload;
+using MCSJ.Tools.ViewJre;
 
 namespace MCSJ
 {
@@ -22,6 +23,7 @@ namespace MCSJ
             };
             var versionManager = new VersionManager();
             var downloadService = new DownloadService(versionManager);
+            var jreViewer = new JreViewer();
             LogMain.Debug("服务初始化完成");
             
             while (true)
@@ -30,7 +32,8 @@ namespace MCSJ
                 Console.WriteLine("1. 显示所有版本");
                 Console.WriteLine("2. 下载指定版本");
                 Console.WriteLine("3. 下载JRE");
-                Console.WriteLine("4. 退出");
+                Console.WriteLine("4. 查看已安装的JRE");
+                Console.WriteLine("5. 退出");
                 Console.Write("请选择操作: ");
                 
                 var input = Console.ReadLine();
@@ -63,6 +66,10 @@ namespace MCSJ
                         LogMain.Info($"JRE下载完成: {jreVersion}");
                         break;
                     case "4":
+                        jreViewer.DisplayInstalledJres();
+                        LogMain.Info("显示已安装的JRE列表");
+                        break;
+                    case "5":
                         LogMain.Info("程序正常退出");
                         return;
                     default:
