@@ -4,6 +4,7 @@ using MCSJ.Tools;
 using MCSJ.Tools.LogSystem;
 using MCSJ.Tools.JreDownload;
 using MCSJ.Tools.ViewJre;
+using MCSJ.Tools.ServerManagement;
 
 namespace MCSJ
 {
@@ -31,9 +32,10 @@ namespace MCSJ
                 Console.WriteLine("MC服务器启动工具");
                 Console.WriteLine("1. 显示所有服务器版本");
                 Console.WriteLine("2. 下载指定服务器版本");
-                Console.WriteLine("3. 下载JRE");
-                Console.WriteLine("4. 查看已安装的JRE");
-                Console.WriteLine("5. 退出");
+                Console.WriteLine("3. 服务器管理");
+                Console.WriteLine("4. 下载JRE");
+                Console.WriteLine("5. 查看已安装的JRE");
+                Console.WriteLine("6. 退出");
                 Console.Write("请选择操作: ");
                 
                 var input = Console.ReadLine();
@@ -53,6 +55,10 @@ namespace MCSJ
                         LogMain.Info($"版本下载完成: {version}");
                         break;
                     case "3":
+                        ServerManager.ShowMenu();
+                        LogMain.Info("进入服务器管理");
+                        break;
+                    case "4":
                         Console.Write("请输入要下载的JRE版本(jre8,jre11,jre17/21/25): ");
                         var jreVersion = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(jreVersion))
@@ -65,11 +71,11 @@ namespace MCSJ
                         await jreDownloadService.DownloadAndSetupJre(jreVersion);
                         LogMain.Info($"JRE下载完成: {jreVersion}");
                         break;
-                    case "4":
+                    case "5":
                         jreViewer.DisplayInstalledJres();
                         LogMain.Info("显示已安装的JRE列表");
                         break;
-                    case "5":
+                    case "6":
                         LogMain.Info("程序正常退出");
                         return;
                     default:
