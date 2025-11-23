@@ -51,14 +51,18 @@ namespace MCSJ.Tools.ServerManagement
 
             // 解析JRE配置
             var jreVersions = new Dictionary<string, Dictionary<string, string>>();
-            string currentVersion = null;
+            string currentVersion = string.Empty;
             
             foreach (var line in File.ReadAllLines(jreConfigPath))
             {
                 if (line.StartsWith("[") && line.EndsWith("]"))
                 {
-                    currentVersion = line.Trim('[', ']');
-                    jreVersions[currentVersion] = new Dictionary<string, string>();
+                    var version = line.Trim('[', ']');
+                    currentVersion = version ?? string.Empty;
+                    if (currentVersion != null!)
+                    {
+                        jreVersions[currentVersion] = new Dictionary<string, string>();
+                    }
                 }
                 else if (line.Contains("=") && currentVersion != null)
                 {
